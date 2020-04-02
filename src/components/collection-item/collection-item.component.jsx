@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 
-import './collection-item.component.scss'
+import './collection-item.style.scss'
 
 const CollectionItem = ({ id, name, price, imageUrl }) => {
   return (
