@@ -45,10 +45,6 @@ class Directory extends React.Component {
     }
   }
   
-  static propTypes = {
-    prop: PropTypes
-  }
-
   render() {
     return (
       <div className='directory-menu'>

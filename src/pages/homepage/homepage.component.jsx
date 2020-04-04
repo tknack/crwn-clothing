@@ -13,8 +13,8 @@ const HomePage = props => {
   )
 }
 
-HomePage.propTypes = {
+// HomePage.propTypes = {
 
-}
+// }
 
 export default HomePage
