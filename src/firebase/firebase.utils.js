@@ -1,6 +1,7 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/auth'
+import { useReducer } from 'react'
 
 const config = {
   apiKey: "AIzaSyD3tx6uDxMYfBRzzinKiPXNeMBaNvRXA5I",
@@ -11,6 +12,40 @@ const config = {
   messagingSenderId: "706733915564",
   appId: "1:706733915564:web:d42b368d6b601195878e09",
   measurementId: "G-MPJJV8XBC0"
+}
+
+export const createUserProfileDocument = async (userAuth, additionalData) => {
+  if (!userAuth) return
+  // à partir de l'utilisateur qui s'authentifie ...
+  // dans firebase
+  // on récupère le document de référence (user), seul moyen de savoir si le document existe ou pas dans la collection user
+  const userRef = firestore.doc(`users/${userAuth.uid}`)
+
+  // ... et sur ce document, on peut faire un get(), stocké dans un snapShot pour en tester l'existance
+  const snapShot = await userRef.get()
+
+  console.log(snapShot)
+
+  // et donc, si le snapshot du document n'existes pas on extrait les propriétés du document pour le créer dans 'users' !
+  // on evite, ici, de créer l'utilisateur plusieur fois !
+  if(!snapShot.exists) {
+    const { displayName, email } = userAuth
+    const createdAt = new Date()
+ 
+    // et ensuite on ajoute cet utilisateur dans la collection 'users' de firebase
+    try {
+      await userRef.set({
+        displayName,
+        email,
+        createdAt,
+        ...additionalData
+      })
+    } catch (error) {
+      console.log('error creating user', error.message)
+    }
+  }
+
+  return userRef
 }
 
 firebase.initializeApp(config)

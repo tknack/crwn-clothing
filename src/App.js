@@ -4,31 +4,40 @@ import { Route, Switch } from "react-router-dom";
 import "./App.css";
 import HomePage from "./pages/homepage/homepage.component";
 import ShopPage from "./pages/shop/shop.component";
-import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component'
+import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component";
 import Header from "./components/header/header.component";
-import { auth } from './firebase/firebase.utils'
+import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 
 const App = () => {
-  const [currentUser, setCurrentUser] = useState(null)
+  const [currentUser, setCurrentUser] = useState(null);
 
-  // let unsubscribeFromAuth = null
   useEffect(() => {
     // connexion
-    const unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-      setCurrentUser(user)
-      console.log(user)
-    })
+    const unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+      // setCurrentUser(user)
+      // createUserProfileDocument(userAuth)
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth);
+
+        userRef.onSnapshot((snapShot) => {
+          console.log(snapShot.data());
+          setCurrentUser({ id: snapShot.id, ...snapShot.data() });
+        });
+      } else {
+        setCurrentUser(userAuth);
+      }
+      console.log(currentUser);
+    });
     return () => {
       // déconnexion
-      unsubscribeFromAuth()
-    }
-  }, [])
-
-
+      unsubscribeFromAuth();
+    };
+  }, []);
+ 
 
   return (
     <div>
-      <Header currentUser={currentUser}/> 
+      <Header currentUser={currentUser} />
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/shop" component={ShopPage} />
@@ -36,6 +45,6 @@ const App = () => {
       </Switch>
     </div>
   );
-}
+};
 
 export default App;
