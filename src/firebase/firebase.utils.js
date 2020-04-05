@@ -24,7 +24,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   // ... et sur ce document, on peut faire un get(), stocké dans un snapShot pour en tester l'existance
   const snapShot = await userRef.get()
 
-  console.log(snapShot)
+  // console.log(snapShot)
 
   // et donc, si le snapshot du document n'existes pas on extrait les propriétés du document pour le créer dans 'users' !
   // on evite, ici, de créer l'utilisateur plusieur fois !

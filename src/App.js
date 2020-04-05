@@ -20,20 +20,20 @@ const App = () => {
         const userRef = await createUserProfileDocument(userAuth);
 
         userRef.onSnapshot((snapShot) => {
-          console.log(snapShot.data());
+          // console.log(snapShot.data());
           setCurrentUser({ id: snapShot.id, ...snapShot.data() });
         });
       } else {
         setCurrentUser(userAuth);
       }
-      console.log(currentUser);
     });
     return () => {
       // déconnexion
       unsubscribeFromAuth();
     };
   }, []);
- 
+  
+  // console.log(currentUser);
 
   return (
     <div>
