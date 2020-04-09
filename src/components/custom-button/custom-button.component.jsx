@@ -1,19 +1,18 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react'
+import PropTypes from 'prop-types'
 
 import './custom-button.styles.scss'
 
-const CustomButton = ({ children, isGoogleSignIn, ...otherProps }) => {
+const CustomButton = ({ children, isGoogleSignIn, inverted, ...otherProps }) => {
   return (
     <button
-      className={`custom-button ${isGoogleSignIn ? 'google-sign-in' : ''} `}
-      {...otherProps}
-    >
+      className={`custom-button ${inverted ? 'inverted' : ''} ${isGoogleSignIn ? 'google-sign-in' : ''} `}
+      {...otherProps}>
       {children}
     </button>
-  );
-};
+  )
+}
 
-CustomButton.propTypes = {};
+CustomButton.propTypes = {}
 
-export default CustomButton;
+export default CustomButton
