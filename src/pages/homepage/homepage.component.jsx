@@ -3,13 +3,15 @@ import PropTypes from 'prop-types'
 
 import Directory from '../../components/directory/directory.component'
 
-import './homepage.styles.scss'
+// import './homepage.styles.scss'
+
+import { HomePageContainer } from './homepage.styles'
 
 const HomePage = props => {
   return (
-    <div className='homepage'>
+    <HomePageContainer>
       <Directory />
-    </div>
+    </HomePageContainer>
   )
 }
 

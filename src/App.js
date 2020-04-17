@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
+import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 
@@ -12,10 +13,17 @@ import CheckoutPage from './pages/checkout/checkout.component'
 
 import Header from './components/header/header.component'
 
+// pour ajouter une collection JSON, issue d'un fichier externe, dans firebase - à ne lancer qu'une fois
+// import { auth, createUserProfileDocument, addCollectionAndDocuments } from './firebase/firebase.utils'
 import { auth, createUserProfileDocument } from './firebase/firebase.utils'
 import { setCurrentUser } from './redux/user/user.actions'
-import { selectCurrentUser} from './redux/user/user.selectors'
+import { selectCurrentUser } from './redux/user/user.selectors'
 
+// pour ajouter une collection JSON, issue d'un fichier externe, dans firebase - à ne lancer qu'une fois
+// import { selectCollectionsForPreview } from './redux/shop/shop.selectors'
+
+// pour ajouter une collection JSON, issue d'un fichier externe, dans firebase - à ne lancer qu'une fois
+// const App = ({ setCurrentUser, currentUser, collectionArray }) => {
 const App = ({ setCurrentUser, currentUser }) => {
   // setCurrentUser vient de mapDispatchToProps
   // const [currentUser, setCurrentUser] = useState(null)
@@ -35,7 +43,13 @@ const App = ({ setCurrentUser, currentUser }) => {
       } else {
         setCurrentUser(userAuth)
       }
+      // pour ajouter une collection JSON, issue d'un fichier externe, dans firebase - à ne lancer qu'une fois
+      // addCollectionAndDocuments(
+        // 'collections',
+        // collectionArray.map(({ title, items }) => ({ title, items }))
+      // )
     })
+
     return () => {
       // déconnexion
       unsubscribeFromAuth()
@@ -51,18 +65,16 @@ const App = ({ setCurrentUser, currentUser }) => {
         <Route exact path='/' component={HomePage} />
         <Route path='/shop' component={ShopPage} />
         <Route exact path='/checkout' component={CheckoutPage} />
-        <Route
-          exact
-          path='/signin'
-          render={() => currentUser ? (<Redirect to='/' />) : (<SignInAndSignUpPage />)}
-        />
+        <Route exact path='/signin' render={() => (currentUser ? <Redirect to='/' /> : <SignInAndSignUpPage />)} />
       </Switch>
     </div>
   )
 }
 
 const mapStateToProps = createStructuredSelector({
-  currentUser:selectCurrentUser,
+  currentUser: selectCurrentUser,
+  // pour ajouter une collection JSON, issue d'un fichier externe, dans firebase - à ne lancer qu'une fois
+  // collectionArray: selectCollectionsForPreview,
 })
 
 const mapDispatchToProps = dispatch => ({
