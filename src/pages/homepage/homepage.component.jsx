@@ -1,22 +1,13 @@
-import React from 'react' 
-import PropTypes from 'prop-types'
+import React from 'react';
 
-import Directory from '../../components/directory/directory.component'
+import Directory from '../../components/directory/directory.component';
 
-// import './homepage.styles.scss'
+import { HomePageContainer } from './homepage.styles';
 
-import { HomePageContainer } from './homepage.styles'
+const HomePage = () => (
+  <HomePageContainer>
+    <Directory />
+  </HomePageContainer>
+);
 
-const HomePage = props => {
-  return (
-    <HomePageContainer>
-      <Directory />
-    </HomePageContainer>
-  )
-}
-
-// HomePage.propTypes = {
-
-// }
-
-export default HomePage
+export default HomePage;

@@ -37,7 +37,6 @@ const App = ({ setCurrentUser, currentUser }) => {
         const userRef = await createUserProfileDocument(userAuth)
 
         userRef.onSnapshot(snapShot => {
-          // console.log(snapShot.data());
           setCurrentUser({ id: snapShot.id, ...snapShot.data() })
         })
       } else {
@@ -70,6 +69,7 @@ const App = ({ setCurrentUser, currentUser }) => {
     </div>
   )
 }
+
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
